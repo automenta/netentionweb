@@ -1,0 +1,14 @@
+http://vaadin.com/directory#addon/appfoundation
+
+http://vaadin.com/directory#addon/visualizationsforvaadin
+    http://vaadin.com/addon/gwt-graphics
+
+http://vaadin.com/addon/googlemapwidget
+http://vaadin.com/directory#addon/gravatarresource
+http://vaadin.com/addon/naturaldate
+
+http://vaadin.com/directory#addon/lucenecontainer
+
+secure login:
+    http://vaadin.com/forum/-/message_boards/message/133420;jsessionid=3369F96DC3E005D4213C9663D0D0515D
+

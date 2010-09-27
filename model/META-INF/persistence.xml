@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+  <persistence-unit name="mysql">
+    <provider>
+                        org.eclipse.persistence.jpa.PersistenceProvider
+        </provider>
+    <class>automenta.netention.Self</class>
+    <class>automenta.netention.Schema</class>
+    <class>org.vaadin.appfoundation.authentication.data.User</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="eclipselink.logging.level" value="INFO"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/netention1"/>
+      <property name="javax.persistence.jdbc.user" value="netention1"/>
+      <property name="javax.persistence.jdbc.password" value="netention1"/>
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+      <property name="eclipselink.orm.throw.exceptions" value="true"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="h2-memory">
+    <provider>
+                        org.eclipse.persistence.jpa.PersistenceProvider
+        </provider>
+    <class>automenta.netention.Self</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="eclipselink.logging.level" value="OFF"/>
+      <property name="eclipselink.jdbc.driver" value="org.h2.Driver"/>
+      <property name="eclipselink.jdbc.url" value="jdbc:h2:mem:example"/>
+      <property name="eclipselink.jdbc.user" value="sa"/>
+      <property name="eclipselink.jdbc.password" value=""/>
+      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+      <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+      <property name="eclipselink.orm.throw.exceptions" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>
