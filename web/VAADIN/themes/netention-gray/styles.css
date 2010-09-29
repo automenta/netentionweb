@@ -1,8 +1,22 @@
-@import "../reindeer/styles.css";
+@import "../chameleon/styles.css";
+
+.v-window{
+    font-size: 18px; 
+}
 
 .v-app {
     background: white;
     padding: 5px;
+    font-size: 18px;
+}
+
+.v-window-outerheader {
+    background: gray;
+    color: white;
+}
+
+.v-tabsheet-tabitemcell {
+    background: #eee;
 }
 
 .headerRealName {

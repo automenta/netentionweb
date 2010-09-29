@@ -64,6 +64,7 @@ public class Sidebar extends VerticalLayout implements ValueChangeListener {
             list = new BeanItemContainer<SidebarView>(SidebarView.class);
 
             qSelect = new NativeSelect("", list);
+            qSelect.addStyleName("v-button");
             qSelect.setImmediate(true);
             topPanel.addComponent(qSelect);
         }

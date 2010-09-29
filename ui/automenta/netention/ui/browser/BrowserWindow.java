@@ -109,7 +109,8 @@ public class BrowserWindow extends Window implements ObjectViewer {
                 }
             }
         });
-
+        contentTabs.setSizeFull();
+        
         content.addComponent(contentTabs);
         content.setExpandRatio(contentTabs, 1);
         content.setSizeFull();
@@ -211,71 +212,49 @@ public class BrowserWindow extends Window implements ObjectViewer {
     public void newDetail() {
         final Window detailWindow = new Window("Thinking about...");
         
-        // ...and make it modal
-        detailWindow.setModal(true);
-        detailWindow.setWidth("75%");
-        detailWindow.setHeight("75%");
 
         Detail newDetail = new MemoryDetail();
         
-//        // Configure the windws layout; by default a VerticalLayout
         VerticalLayout content = (VerticalLayout) detailWindow.getContent();
         content.setMargin(true);
         content.setSpacing(true);
 
-        content.addComponent(new DetailEditPanel(app.getSchema(), newDetail));
+        content.addComponent(new DetailEditPanel(app.getSchema(), newDetail) {
 
-//
-//        LoginForm login = new LoginForm();
-//        login.setWidth("100%");
-//        login.setHeight("300px");
-//        login.addListener(new LoginForm.LoginListener() {
-//            public void onLogin(LoginEvent event) {
-//
-//                String username = event.getLoginParameter("username");
-//                String pw = PasswordUtil.generateHashedPassword(event.getLoginParameter("password"));
-//
-////                browser.showNotification(
-////                        "New Login",
-////                        "Username: " + event.getLoginParameter("username")
-////                                + ", password: "
-////                                + event.getLoginParameter("password"));
-//
-////                User u = null;
-////                try {
-////                    u = AuthenticationUtil.authenticate(username, pw);
-////                } catch (InvalidCredentialsException ex) {
-////                    Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
-////                } catch (AccountLockedException ex) {
-////                    Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
-////                }
-////                if (u == null) {
-////                    UserUtil.registerUser(username, pw, pw);
-////                }
-////                System.out.println("authenticated: " + u);
-//
-//                String query = "SELECT u FROM User AS u WHERE u.username=:username AND u.password=:password";
-//                Map<String, Object> parameters = new HashMap<String, Object>();
-//                parameters.put("username", username);
-//                parameters.put("password", pw);
-//
-//                User self = db.find(query, parameters);
-//                if (self==null) {
-//                    browser.showNotification("Invalid username or password.");
-//                }
-//                else {
-//                    SessionHandler.setUser(self);
-//                }
-//
-//                browser.removeWindow(loginWindow);
-//
-//                //Header.this.getWindow().open(new ExternalResource(app.getURL()));
-//                browser.refresh();
-//            }
-//        });
-//        content.addComponent(login);
+            @Override
+            public void createNewPattern() {
+                final Window w = new Window("New Pattern...");
+                VerticalLayout content = (VerticalLayout) w.getContent();
+                content.setMargin(true);
+                content.setSpacing(true);
+                content.addComponent(new NewPatternPanel());
+                openModalWindow(w, "50%", "50%");
+            }
 
-        addWindow(detailWindow);
+            @Override
+            public void cancel() {
+                close();
+            }
+
+            @Override
+            public void save() {
+                close();
+            }
+
+            protected void close() {
+                BrowserWindow.this.removeWindow(detailWindow);
+            }
+        });
+
+        openModalWindow(detailWindow, "75%", "75%");
         
+    }
+
+    public void openModalWindow(Window window, String width, String height) {
+        window.setModal(true);
+        window.setWidth(width);
+        window.setHeight(height);
+        addWindow(window);
+
     }
 }

@@ -62,6 +62,8 @@ abstract public class NApplication extends Application implements Netention {
         ViewHandler.initialize(this);
         Lang.initialize(this);
         Permissions.initialize(this, new JPAPermissionManager());
+
+        setTheme("chameleon-dark");
     }
 
 
