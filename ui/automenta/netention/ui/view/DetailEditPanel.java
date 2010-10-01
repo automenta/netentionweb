@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package automenta.netention.ui.browser;
+package automenta.netention.ui.view;
 
 import automenta.netention.Detail;
 import automenta.netention.Pattern;
@@ -21,6 +21,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.collections15.CollectionUtils;
@@ -37,13 +38,14 @@ abstract public class DetailEditPanel extends VerticalLayout {
     private final Schema schema;
     private final MenuBar patternBar;
     private final VerticalLayout propertiesPanel;
+    private final RichTextArea text;
 
     public DetailEditPanel(Schema schema, Detail d) {
         super();
         this.detail = d;
         this.schema = schema;
 
-        final RichTextArea text = new RichTextArea();
+        text = new RichTextArea();
         text.setWidth("100%");
         addComponent(text);
 
@@ -77,6 +79,7 @@ abstract public class DetailEditPanel extends VerticalLayout {
         saveButton.addListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
+                controlsToObject();
                 save();
             }
         });
@@ -85,6 +88,16 @@ abstract public class DetailEditPanel extends VerticalLayout {
         setComponentAlignment(bottomPanel, Alignment.TOP_CENTER);
 
         //setComponentAlignment(bottomPanel, Alignment.TOP_RIGHT);
+    }
+
+    protected void controlsToObject() {
+        detail.setName(text.toString());
+        detail.setWhenModified(new Date());
+
+        //TODO remove and add patterns
+        
+        //TODO remove and add properties
+
     }
 
     abstract public void cancel();
@@ -146,6 +159,9 @@ abstract public class DetailEditPanel extends VerticalLayout {
             }
 
             i.addSeparator();
+
+            //move left (more important)
+            //move right (less important)
 
             i.addItem("Remove", new Command() {
                 @Override

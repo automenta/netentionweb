@@ -5,6 +5,8 @@
  */
 package automenta.netention.ui;
 
+import automenta.netention.Detail;
+import automenta.netention.Node;
 import automenta.netention.Schema;
 import automenta.netention.Self;
 import automenta.netention.ui.browser.BrowserWindow;
@@ -18,6 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.vaadin.appfoundation.authentication.SessionHandler;
@@ -37,9 +40,65 @@ import org.vaadin.appfoundation.view.ViewHandler;
  */
 abstract public class NApplication extends Application implements Netention {
 
+    public static void setAnonymousSelf(Self a) {
+        anonymousSelf = a;
+    }
+
+    public static Self getAnonymousSelf() {
+        return anonymousSelf;
+    }
+
     protected Logger logger = Logger.getLogger(NApplication.class);
     protected static Schema schema;
     private final IFacade db;
+
+    private static Self anonymousSelf;
+
+    public Detail getDetail(String id) {
+        //TODO implement a select
+        return null;
+
+//        Detail d = details.get(id);
+//        if (d != null) {
+//            return d;
+//        }
+//        else {
+////            for (SelfPlugin sp : plugins) {
+////                if (sp instanceof DetailSource) {
+////                    DetailSource ds = (DetailSource) sp;
+////                    Detail e = ds.getDetail(id);
+////                    if (e!=null)
+////                        return e;
+////                }
+////            }
+//        }
+//        return null;
+    }
+
+    public Iterator<Node> iterateDetails() {
+//        List<Iterator<? extends Node>> iList = new LinkedList();
+//        iList.add(details.values().iterator());
+////        if (plugins!=null) {
+////            for (SelfPlugin sp : plugins) {
+////                if (sp instanceof DetailSource) {
+////                    DetailSource ds = (DetailSource) sp;
+////                    iList.add(ds.iterateDetails());
+////                }
+////            }
+////        }
+//        return IteratorUtils.chainedIterator(iList);
+        return null;
+    }
+
+
+    public void addDetail(Detail d) {
+        db.store(d);
+    }
+
+    public void removeDetail(Detail d) {
+        db.delete(d);
+    }
+
 
     public NApplication() {
         super();
@@ -52,7 +111,6 @@ abstract public class NApplication extends Application implements Netention {
             
             db.store(schema);
         }
-        
 
     }
 
@@ -88,7 +146,7 @@ abstract public class NApplication extends Application implements Netention {
         login.addListener(new LoginForm.LoginListener() {
             public void onLogin(LoginEvent event) {
 
-                String username = event.getLoginParameter("username");
+                String username = event.getLoginParameter("username").toLowerCase();
                 String pw = PasswordUtil.generateHashedPassword(event.getLoginParameter("password"));
                 
 //                browser.showNotification(
@@ -156,7 +214,7 @@ abstract public class NApplication extends Application implements Netention {
             public void onLogin(LoginEvent event) {
                 
                 Self newSelf = new Self();
-                newSelf.setUsername(event.getLoginParameter("username"));
+                newSelf.setUsername(event.getLoginParameter("username").toLowerCase());
                 newSelf.setName(event.getLoginParameter("username"));
                                 
                 newSelf.setPassword(PasswordUtil.generateHashedPassword(event.getLoginParameter("password")));
@@ -211,6 +269,12 @@ abstract public class NApplication extends Application implements Netention {
     @Override
     public Schema getSchema() {
         return schema;
+    }
+
+    public Detail newDetail() {
+        Detail d = new Detail();
+        //d.setCreator(SessionHandler.get().getUsername());
+        return d;
     }
 
 

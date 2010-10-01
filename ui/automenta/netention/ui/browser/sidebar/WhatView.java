@@ -4,15 +4,8 @@
  */
 package automenta.netention.ui.browser.sidebar;
 
-import automenta.netention.Node;
-import automenta.netention.Self;
 import automenta.netention.ui.browser.Sidebar.SidebarView;
 import com.vaadin.ui.AbstractLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Tree;
-import java.util.Iterator;
-import org.vaadin.appfoundation.authentication.SessionHandler;
-import org.vaadin.appfoundation.authentication.data.User;
 
 /**
  *
@@ -23,21 +16,21 @@ public class WhatView extends SidebarView {
     public WhatView() {
         super("What");
     }
-    
+
     @Override
     public void render(AbstractLayout target) {
-        User u = SessionHandler.get();
-        if (u == null) {
-            target.addComponent(new Label("Login to see personal details."));
-            return;
-        }
-        
-        Self s = (Self)u;
-        Iterator<Node> di = s.iterateDetails();
-        while (di.hasNext()) {
-            Node n = di.next();
-            target.addComponent(new Label(n.toString()));
-        }
+//        User u = SessionHandler.get();
+//        if (u == null) {
+//            //target.addComponent(new Label("Login to see personal details."));
+//            u = NApplication.getAnonymousSelf();
+//        }
+//
+//        Self s = (Self)u;
+//        Iterator<Node> di = s.iterateDetails();
+//        while (di.hasNext()) {
+//            Node n = di.next();
+//            target.addComponent(new WideDetailIcon(n));
+//        }
         
     }
 

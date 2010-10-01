@@ -5,17 +5,19 @@
 
 package automenta.netention.ui.browser;
 
+import automenta.netention.ui.view.DetailEditPanel;
+import automenta.netention.ui.view.NewPatternPanel;
 import automenta.netention.Detail;
 import automenta.netention.Pattern;
 import automenta.netention.Self;
-import automenta.netention.impl.MemoryDetail;
 import automenta.netention.ui.NApplication;
 import automenta.netention.ui.ObjectViewer;
 import automenta.netention.ui.browser.sidebar.DBView;
 import automenta.netention.ui.browser.sidebar.MissingView;
+import automenta.netention.ui.browser.sidebar.RecentView;
 import automenta.netention.ui.browser.sidebar.TypesView;
 import automenta.netention.ui.browser.sidebar.WhatView;
-import automenta.netention.ui.view.PatternView;
+import automenta.netention.ui.view.PatternPanel;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Component;
@@ -81,7 +83,7 @@ public class BrowserWindow extends Window implements ObjectViewer {
         menu.addConceptView(new MissingView("Where", "Browses a map of geolocated objects."));
         menu.addConceptView(new MissingView("Why", "Browses a list of things tagged as 'reasons'"));
         menu.addConceptView(new MissingView("Frequent", "Browses a list of frequently accessed objects."));
-        menu.addConceptView(new MissingView("Recent", "Browses a list of recently accessed objects."));
+        menu.addConceptView(new RecentView());
         menu.addConceptView(new TypesView(this, app.getSchema()));
         menu.addConceptView(new DBView());
         menu.setSizeFull();
@@ -205,7 +207,7 @@ public class BrowserWindow extends Window implements ObjectViewer {
             addTab(h, h.title, h.newComponent(), h.getIcon());
         } else if (o instanceof Pattern) {
             Pattern p = (Pattern) o;
-            addTab(p, p.getName(), new PatternView(p), new ThemeResource(p.getIconURL()));
+            addTab(p, p.getName(), new PatternPanel(p), new ThemeResource(p.getIconURL()));
         }
     }
 
@@ -213,7 +215,7 @@ public class BrowserWindow extends Window implements ObjectViewer {
         final Window detailWindow = new Window("Thinking about...");
         
 
-        Detail newDetail = new MemoryDetail();
+        Detail newDetail = app.newDetail();
         
         VerticalLayout content = (VerticalLayout) detailWindow.getContent();
         content.setMargin(true);
@@ -238,6 +240,7 @@ public class BrowserWindow extends Window implements ObjectViewer {
 
             @Override
             public void save() {
+                app.addDetail(detail);
                 close();
             }
 

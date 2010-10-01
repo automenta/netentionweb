@@ -1,5 +1,7 @@
 package automenta.netention.ui;
 
+import automenta.netention.Self;
+import automenta.netention.impl.MessageDetail;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +17,9 @@ import org.vaadin.appfoundation.persistence.facade.FacadeFactory;
 public class NContextListener implements ServletContextListener {
 
     public static final String PersistenceModel = "mysql";
+
+
+
 
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
@@ -34,10 +39,18 @@ public class NContextListener implements ServletContextListener {
         prop.setProperty("password.length.min", "4");
         prop.setProperty("username.length.min", "4");
         UserUtil.setProperties(prop);
-        
-        
+                
         //File file = new File(translationsPath);
         //InternationalizationServlet.loadTranslations(file);
+
+
+        //Init Anonymous (public) Self
+        Self a = new Self();
+//        addDetail(new MessageDetail(a, "Subject", "Body"));
+//        addDetail(new MessageDetail(a, "Subject", "Body"));
+//        addDetail(new MessageDetail(a, "Subject", "Body"));
+        NApplication.setAnonymousSelf(a);
+
     }
 
     @Override

@@ -32,3 +32,11 @@
 .sidebarTopPanel {    
     margin-bottom: 5px;
 }
+
+.BigLabel {
+    font-size: 200%;
+}
+.SmallLabel {
+    font-size: 65%;
+    color: #333;
+}

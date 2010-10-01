@@ -10,22 +10,18 @@ import java.util.UUID;
  *
  * @author seh
  */
-public interface Link extends Node {
+public abstract class Link extends Node {
+
+    public Link(String id) {
+        super(id + UUID.randomUUID().toString());
+    }
+
+    public Link(String id, String name) {
+        super(id + UUID.randomUUID().toString(), name);
+    }
 
     public interface HasStrength {
+
         public double getStrength();
     }
-
-    public static abstract class AbstractLink extends AbstractNode implements Link {
-
-        public AbstractLink(String id) {
-            super(id + UUID.randomUUID().toString());
-        }
-
-        public AbstractLink(String id, String name) {
-            super(id + UUID.randomUUID().toString(), name);
-        }
-
-    }
-
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
  * a pattern associates with a weighted set of properties (by ID)
  * @author seh
  */
-public class Pattern extends HashMap<String, Double> implements Serializable, Node {
+public class Pattern extends HashMap<String, Double> implements Serializable {
 
     public final String id;
     private String name;
@@ -58,7 +58,6 @@ public class Pattern extends HashMap<String, Double> implements Serializable, No
         return iconURL;
     }
 
-    @Override
     public String getName() {
         return name;
     }

@@ -1,74 +1,77 @@
 package automenta.netention;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import org.vaadin.appfoundation.persistence.data.AbstractPojo;
 
 /** analogous to an RDF resource */
-public interface Node extends Serializable {
+//@Entity
+//@Table(name = "appnode", uniqueConstraints = { @UniqueConstraint(columnNames = {"uuid"})})
+public class Node implements Serializable {
 
-    /** URI, or UUID */
-    public String getID();
+    @Id
+    protected String uuid;
 
-    public String getName();
-    
-    public static abstract class AbstractNode implements Node {
+    protected String name;
 
-        private String id;
-        private String name;
-
-
-        public AbstractNode(String id) {
-            this(id, id);
-        }
-
-        public AbstractNode(String id, String name) {
-            super();
-
-            this.id = id;
-            this.name = name;
-        }
-
-        /** universally unique ID */
-        public String getID() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String nextName) {
-            this.name = nextName;
-        }
-
-        @Override public String toString() {
-            return getID() + " (" + getName() + ")";
-        }
-
-        @Override
-        public int hashCode() {
-            return id.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof AbstractNode) {
-                AbstractNode an = (AbstractNode)obj;
-                return an.id.equals(id);
-            }
-            return false;
-        }
-
+    public Node() {
+        this("", "");
     }
-    
-    public static class StringNode extends AbstractNode {
+
+    public Node(String id) {
+        this(id, id);
+    }
+
+    public Node(String id, String name) {
+        super();
+
+        this.uuid = id;
+        this.name = name;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    /** universally unique ID */
+    public String getID() {
+        return uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String nextName) {
+        this.name = nextName;
+    }
+
+    public String toString() {
+        return getID() + " (" + getName() + ")";
+    }
+
+    public int hashCode() {
+        return getID().hashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Node) {
+            Node an = (Node) obj;
+            return an.getID().equals(getID());
+        }
+        return false;
+    }
+
+    public static class StringNode extends Node {
 
         public StringNode(String id) {
             super(id);
         }
-        @Override public String toString() {
+
+        @Override
+        public String toString() {
             return getName();
         }
-        
     }
-
 }

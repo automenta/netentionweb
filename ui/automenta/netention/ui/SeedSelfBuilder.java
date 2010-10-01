@@ -1,10 +1,10 @@
 package automenta.netention.ui;
 
+import automenta.netention.Detail;
 import automenta.netention.Mode;
 import automenta.netention.Pattern;
 import automenta.netention.Schema;
 import automenta.netention.Self;
-import automenta.netention.impl.MemoryDetail;
 import automenta.netention.value.real.RealProp;
 import automenta.netention.value.string.StringProp;
 import automenta.netention.value.bool.BoolIs;
@@ -19,10 +19,10 @@ import automenta.netention.value.uri.URIProp;
 public class SeedSelfBuilder {
 
     public static void build(Self self) {
-        MemoryDetail d1 = new MemoryDetail("Red Bike", Mode.Real, "Built", "Mobile");
-        MemoryDetail d11 = new MemoryDetail("Blue Bike", Mode.Real, "Built");
-        MemoryDetail d2 = new MemoryDetail("Imaginary Bike", Mode.Imaginary, "Mobile", "Built");
-        MemoryDetail d3 = new MemoryDetail("What is Netention?", Mode.Real, "Message");
+        Detail d1 = new Detail("Red Bike", Mode.Real, "Built", "Mobile");
+        Detail d11 = new Detail("Blue Bike", Mode.Real, "Built");
+        Detail d2 = new Detail("Imaginary Bike", Mode.Imaginary, "Mobile", "Built");
+        Detail d3 = new Detail("What is Netention?", Mode.Real, "Message");
         {
             d1.addProperty("numWheels", new IntegerIs(4));
             d1.addProperty("manufacturer", new StringIs("myself"));
@@ -47,10 +47,10 @@ public class SeedSelfBuilder {
         }
         {
         }
-        self.addDetail(d1);
-        self.addDetail(d11);
-        self.addDetail(d2);
-        self.addDetail(d3);
+//        self.addDetail(d1);
+//        self.addDetail(d11);
+//        self.addDetail(d2);
+//        self.addDetail(d3);
 
     }
 
@@ -136,6 +136,9 @@ public class SeedSelfBuilder {
         schema.addPattern(new Pattern("Message").setIconURL("tango32/apps/internet-mail.png"));
         {
             schema.addProperty(new StringProp("recipient", "Recipient"), "Message");
+            schema.addProperty(new StringProp("content", "Content"), "Message");
+            //TODO use a TimePoint for whenSent
+            schema.addProperty(new StringProp("whenSent", "When Sent"), "Message");
         }
 
         schema.addPattern(new Pattern("Business").setIconURL("tango32/apps/internet-mail.png"));

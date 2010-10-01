@@ -5,13 +5,13 @@
 
 package automenta.netention.dialog;
 
-import automenta.netention.Node.AbstractNode;
+import automenta.netention.Node;
 
 /**
  * an instance of an interaction
  * @author seh
  */
-public class Dialog extends AbstractNode {
+public class Dialog extends Node {
 
     final Step start;
     Step step;

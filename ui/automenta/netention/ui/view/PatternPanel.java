@@ -27,7 +27,7 @@ import java.util.Arrays;
  *
  * @author seh
  */
-public class PatternView extends VerticalLayout {
+public class PatternPanel extends VerticalLayout {
 
     public final Pattern pattern;
     
@@ -77,7 +77,7 @@ public class PatternView extends VerticalLayout {
         }
     }
 
-    public PatternView(Pattern p) {
+    public PatternPanel(Pattern p) {
         super();
         this.pattern = p;
 

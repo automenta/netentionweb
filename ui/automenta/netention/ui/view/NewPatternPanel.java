@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package automenta.netention.ui.browser;
+package automenta.netention.ui.view;
 
 import com.vaadin.ui.VerticalLayout;
 

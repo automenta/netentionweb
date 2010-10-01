@@ -4,9 +4,10 @@
     <provider>
                         org.eclipse.persistence.jpa.PersistenceProvider
         </provider>
+    <class>org.vaadin.appfoundation.authentication.data.User</class>
     <class>automenta.netention.Self</class>
     <class>automenta.netention.Schema</class>
-    <class>org.vaadin.appfoundation.authentication.data.User</class>
+    <class>automenta.netention.Detail</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="INFO"/>

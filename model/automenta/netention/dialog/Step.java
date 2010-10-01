@@ -5,22 +5,25 @@
 
 package automenta.netention.dialog;
 
-import automenta.netention.Node;
-import java.util.LinkedList;
-import java.util.List;
+import automenta.netention.Detail;
 
 /**
- * a step or interaction
+ * a step or interaction which is either incomplete or completed
  * @param S state object that it can operate upon
  */
-public interface Step extends Node {
+abstract public class Step extends Detail {
 
-    //public void setState(S s);
+    public Step(String name) {
+        super(name);
+    }
 
 
-    public List<Step> getNextSteps();
-
-    public void addStepWatcher(StepWatcher w);
-    public void removeStepWatcher(StepWatcher w);
+//    //public void setState(S s);
+//
+//
+//    public List<Step> getNextSteps();
+//
+//    public void addStepWatcher(StepWatcher w);
+//    public void removeStepWatcher(StepWatcher w);
 
 }

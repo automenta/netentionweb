@@ -4,7 +4,6 @@
  */
 package automenta.netention.dialog.step;
 
-import automenta.netention.dialog.AbstractStep;
 import automenta.netention.dialog.Step;
 import automenta.netention.dialog.StepWatcher;
 import java.util.LinkedList;
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * basically displays a content object, ex: text, image, video, HTML
  */
-public class MessageStep extends AbstractStep implements Step {
+public class MessageStep extends Step  {
 
     private final String message;
     protected List<Choice> choices;
@@ -37,14 +36,14 @@ public class MessageStep extends AbstractStep implements Step {
     }
 
     public MessageStep(String message) {
-        super();
+        super(message);
         this.message = message;
         this.choices = new LinkedList();
         this.chosen = -1;
     }
 
     public MessageStep(String message, List<Choice> choices) {
-        super();
+        super(message);
         this.message = message;
 
         this.choices = choices;
@@ -52,7 +51,7 @@ public class MessageStep extends AbstractStep implements Step {
     }
 
     public MessageStep(String message, String choice, Step step) {
-        super();
+        super(message);
         this.message = message;
 
         this.choices = new LinkedList();
@@ -62,7 +61,7 @@ public class MessageStep extends AbstractStep implements Step {
     }
 
     public MessageStep(String message, String choiceA, Step stepA, String choiceB, Step stepB) {
-        super();
+        super(message);
         this.message = message;
 
         this.choices = new LinkedList();
@@ -74,16 +73,15 @@ public class MessageStep extends AbstractStep implements Step {
 
     public void setChoice(int c) {
         this.chosen = c;
-        for (StepWatcher w : getWatchers()) {
-            w.onStepChanged(this, false, true);
-        }
+//        for (StepWatcher w : getWatchers()) {
+//            w.onStepChanged(this, false, true);
+//        }
     }
 
     public String getMessage() {
         return message;
     }
 
-    @Override
     public List<Step> getNextSteps() {
         if (chosen == -1) {
             return null;
@@ -103,9 +101,9 @@ public class MessageStep extends AbstractStep implements Step {
     
     public void setChoices(List<Choice> c) {
         this.choices = c;
-        for (StepWatcher w : getWatchers()) {
-            w.onStepChanged(this, true, false);
-        }
+//        for (StepWatcher w : getWatchers()) {
+//            w.onStepChanged(this, true, false);
+//        }
     }
     
 }

@@ -5,24 +5,18 @@
 package automenta.netention;
 
 import automenta.netention.graph.ValueEdge;
-import automenta.netention.linker.Linker;
-import automenta.netention.linker.hueristic.DefaultHeuristicLinker;
 import com.syncleus.dann.graph.MutableBidirectedGraph;
 import com.syncleus.dann.graph.MutableDirectedAdjacencyGraph;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import org.apache.commons.collections15.IteratorUtils;
 import org.vaadin.appfoundation.authentication.data.User;
 
 /**
@@ -43,8 +37,6 @@ public class Self extends User implements Serializable {
 
     @Transient private int failedPasswordChanges = 0;    
 
-    /** detailID -> details */
-    private Map<String, Detail> details = new HashMap();
 
     /* detail -> detail link graph */
     //transient private DirectedSparseMultigraph<Detail, Link> links = new DirectedSparseMultigraph<Detail, Link>();
@@ -65,52 +57,6 @@ public class Self extends User implements Serializable {
         return graph;
     }
 
-    public Detail getDetail(String id) {
-        Detail d = details.get(id);
-        if (d != null) {
-            return d;
-        }
-        else {
-//            for (SelfPlugin sp : plugins) {
-//                if (sp instanceof DetailSource) {
-//                    DetailSource ds = (DetailSource) sp;
-//                    Detail e = ds.getDetail(id);
-//                    if (e!=null)
-//                        return e;
-//                }
-//            }
-        }
-        return null;
-    }
-
-    public Iterator<Node> iterateDetails() {
-        List<Iterator<? extends Node>> iList = new LinkedList();
-        iList.add(details.values().iterator());
-//        if (plugins!=null) {
-//            for (SelfPlugin sp : plugins) {
-//                if (sp instanceof DetailSource) {
-//                    DetailSource ds = (DetailSource) sp;
-//                    iList.add(ds.iterateDetails());
-//                }
-//            }
-//        }
-        return IteratorUtils.chainedIterator(iList);
-    }
-
-
-    public boolean addDetail(Detail d) {
-        Detail existing = details.get(d.getID());
-        if (existing != null) {
-            return false;
-        }
-
-        details.put(d.getID(), d);
-        return true;
-    }
-
-    public boolean removeDetail(Detail d) {
-        return details.remove(d.getID()) != null;
-    }
 
     public Collection<String> getAvailablePatterns(Schema s, Detail d) {
         //TODO use dependency information to find all available patterns applicable for d
@@ -151,7 +97,7 @@ public class Self extends User implements Serializable {
         return false;
     }
 
-    public void link(Linker l) {
+/*    public void link(Linker l) {
         MutableBidirectedGraph<Node, ValueEdge<Node, Link>> g = l.run(IteratorUtils.toList(iterateDetails()));
         for (Node n : g.getNodes()) {
             graph.add(n);
@@ -160,7 +106,7 @@ public class Self extends User implements Serializable {
             graph.add(new ValueEdge(e.getValue(), e.getSourceNode(), e.getDestinationNode()));
         }
     }
-
+*/
     public void clearGraph() {
         //links = new SimpleDynamicDirectedGraph<Node, Link>();
         
@@ -198,13 +144,13 @@ public class Self extends User implements Serializable {
         return true;
     }
 
-    public void updateLinks(Runnable whenFinished, Detail... details) {
-        clearGraph();
-        link(new DefaultHeuristicLinker());
-        
-        if (whenFinished!=null)
-            whenFinished.run();
-    }
+//    public void updateLinks(Runnable whenFinished, Detail... details) {
+//        clearGraph();
+//        link(new DefaultHeuristicLinker());
+//
+//        if (whenFinished!=null)
+//            whenFinished.run();
+//    }
     
 //    public void addPlugin(SelfPlugin p) {
 //        if (plugins == null)
