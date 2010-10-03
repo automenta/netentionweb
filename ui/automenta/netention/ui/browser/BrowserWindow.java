@@ -207,15 +207,15 @@ public class BrowserWindow extends Window implements ObjectViewer {
             addTab(h, h.title, h.newComponent(), h.getIcon());
         } else if (o instanceof Pattern) {
             Pattern p = (Pattern) o;
-            addTab(p, p.getName(), new PatternPanel(p), new ThemeResource(p.getIconURL()));
+            addTab(p, p.getName(), new PatternPanel(this, p), new ThemeResource(p.getIconURL()));
         }
     }
 
-    public void newDetail() {
+    public void newDetail(String... patterns) {
         final Window detailWindow = new Window("Thinking about...");
         
-
         Detail newDetail = app.newDetail();
+        newDetail.addPattern(patterns);
         
         VerticalLayout content = (VerticalLayout) detailWindow.getContent();
         content.setMargin(true);

@@ -115,9 +115,12 @@ public class Detail extends AbstractPojo {
 //        return false;
 //    }
 
-    public boolean addPattern(String patternID) {
-        return getPatterns().add(patternID);
+    public boolean addPattern(String... patternID) {
+        for (String p : patternID)
+            getPatterns().add(p);
+        return true;
     }
+
     public boolean removePattern(String patternID) {
         return getPatterns().remove(patternID);
     }
@@ -150,6 +153,7 @@ public class Detail extends AbstractPojo {
     public void setWhenModified(Date whenModified) {
         this.whenModified = whenModified;
     }
+
 
 
 

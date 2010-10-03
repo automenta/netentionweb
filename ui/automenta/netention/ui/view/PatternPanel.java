@@ -5,13 +5,14 @@
 package automenta.netention.ui.view;
 
 import automenta.netention.Pattern;
+import automenta.netention.ui.browser.BrowserWindow;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
@@ -77,7 +78,7 @@ public class PatternPanel extends VerticalLayout {
         }
     }
 
-    public PatternPanel(Pattern p) {
+    public PatternPanel(final BrowserWindow browser, Pattern p) {
         super();
         this.pattern = p;
 
@@ -136,6 +137,16 @@ public class PatternPanel extends VerticalLayout {
         buttons.addComponent(apply);
         patternForm.getFooter().addComponent(buttons);
         patternForm.getFooter().setMargin(false, false, true, true);
+
+
+        Button newInstanceButton = new Button("New Detail...");
+        newInstanceButton.addListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                browser.newDetail(pattern.getID());
+            }
+        });
+        addComponent(newInstanceButton);
 
 //        // button for showing the internal state of the POJO
 //        Button showPojoState = new Button("Show POJO internal state",
