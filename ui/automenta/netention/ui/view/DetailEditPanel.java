@@ -144,7 +144,8 @@ abstract public class DetailEditPanel extends VerticalLayout {
         //2. add all present patterns to 'patternBar' as menus
         for (final String p : presentPatterns) {
             Pattern pattern = schema.getPatterns().get(p);
-            MenuItem i = patternBar.addItem(pattern.getName() + " (" + getPropertiesPresent(pattern) + "/" + getPropertiesTotal(pattern) + ")", null, null);
+            int total = getPropertiesTotal(pattern);
+            MenuItem i = patternBar.addItem(pattern.getName() + " (" + (total - getPropertiesNotPresent(pattern)) + "/" + total + ")", null, null);
 
             for (String property : pattern.keySet()) {
                 if (supportsAnotherProperty(property)) {
@@ -179,19 +180,10 @@ abstract public class DetailEditPanel extends VerticalLayout {
 
         detail.getProperties().add(propertyValue);
 
+        refreshPatternBar();
         refreshProperties();
     }
 
-    public class PropertyPanel extends HorizontalLayout {
-
-        private PropertyPanel(Property p, PropertyValue pv) {
-            super();
-
-            Label propertyName = new Label(p.getName());
-            addComponent(propertyName);
-        }
-
-    }
 
     public class MissingPropertyPanel extends HorizontalLayout {
 
@@ -200,16 +192,20 @@ abstract public class DetailEditPanel extends VerticalLayout {
             addComponent(new Label(lt));
         }
 
-
     }
 
     protected void refreshProperties() {
         propertiesPanel.removeAllComponents();
 
-        for (PropertyValue pv : detail.getProperties()) {
+        for (final PropertyValue pv : detail.getProperties()) {
             Property p = schema.getProperty(pv.getProperty());
             if (p!=null) {
-                propertiesPanel.addComponent(new PropertyPanel(p, pv));
+                propertiesPanel.addComponent(new ValueEditPanel(p, pv) {
+                    @Override
+                    public void removeThis() {
+                        removeProperty(pv);
+                    }
+                });
             }
              else {
                 propertiesPanel.addComponent(new MissingPropertyPanel(pv));
@@ -219,9 +215,38 @@ abstract public class DetailEditPanel extends VerticalLayout {
 
     }
 
-    public int getPropertiesPresent(Pattern p) {
-        return 0;
+    public void removeProperty(PropertyValue pv) {
+        detail.getProperties().remove(pv);
+        refreshPatternBar();
+        refreshProperties();
     }
+
+    public boolean definedProperty(String p) {
+        for (PropertyValue pv : detail.getProperties()) {
+            if (pv.getProperty().equals(p))
+                return true;
+        }
+        return false;
+    }
+
+    public int getPropertiesNotPresent(Pattern p) {
+        int count = 0;
+        for (String pid : p.keySet()) {
+            if (!definedProperty(pid)) {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getPropertiesPresent(String propertyID) {
+        int count = 0;
+        for (PropertyValue pv : detail.getProperties()) {
+            if (pv.getProperty().equals(propertyID))
+                count++;
+        }
+        return count;
+    }
+
     public int getPropertiesTotal(Pattern p) {
         return p.size();
     }
@@ -230,7 +255,22 @@ abstract public class DetailEditPanel extends VerticalLayout {
 
     public void addNewPattern(String patternID) {
         if (!detail.getPatterns().contains(patternID)) {
-            detail.getPatterns().add(patternID);
+            Pattern p = schema.getPatterns().get(patternID);
+            if (p!=null) {
+                detail.getPatterns().add(patternID);
+
+                for (String propertyID : p.keySet()) {
+                    //String spr = p.get(propertyID);
+                    Property pr = schema.getProperty(propertyID);
+                    if (pr.getCardinalityMin() > 0) {
+                        for (int i = getPropertiesPresent(propertyID); i < pr.getCardinalityMin(); i++) {
+                            addProperty(pr.getID());
+                        }
+                    }
+                }
+            }
+
+
             refreshPatternBar();
         }        
     }
@@ -243,7 +283,15 @@ abstract public class DetailEditPanel extends VerticalLayout {
     }
 
     public boolean supportsAnotherProperty(String propertyID) {
-        return true;
+        Property p = schema.getProperty(propertyID);
+        if (p.getCardinalityMax() == -1)
+            return true;
+
+        int present = getPropertiesPresent(propertyID);
+        if (present < p.getCardinalityMax())
+            return true;
+
+        return false;
     }
 
 }

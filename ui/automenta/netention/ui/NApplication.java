@@ -9,7 +9,7 @@ import automenta.netention.Detail;
 import automenta.netention.Node;
 import automenta.netention.Schema;
 import automenta.netention.Self;
-import automenta.netention.ui.browser.BrowserWindow;
+import automenta.netention.ui.browser.AppWindow;
 import com.vaadin.Application;
 import com.vaadin.terminal.ClassResource;
 import com.vaadin.ui.LoginForm;
@@ -126,7 +126,7 @@ abstract public class NApplication extends Application implements Netention {
 
 
     //TODO extract LoginWindow class
-    public void login(final BrowserWindow browser) {
+    public void login(final AppWindow browser) {
         //show a dialog window w/ login form
           // Create the window...
         final Window loginWindow = new Window("Login");
@@ -192,7 +192,7 @@ abstract public class NApplication extends Application implements Netention {
         browser.addWindow(loginWindow);
     }
 
-    public void register(final BrowserWindow root) {
+    public void register(final AppWindow root) {
         //show a dialog window w/ login form
           // Create the window...
         final Window regWindow = new Window("Register");
@@ -235,7 +235,7 @@ abstract public class NApplication extends Application implements Netention {
         root.addWindow(regWindow);
     }
     
-    public void logout(BrowserWindow browser) {
+    public void logout(AppWindow browser) {
         SessionHandler.setUser(null);
         browser.refresh();
     }

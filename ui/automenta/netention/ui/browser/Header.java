@@ -22,9 +22,9 @@ import org.vaadin.appfoundation.authentication.data.User;
 public class Header extends HorizontalLayout {
     private final User user;
     private final NApplication app;
-    private final BrowserWindow browser;
+    private final AppWindow browser;
 
-    public Header(final NApplication app, final BrowserWindow browser, User user) {
+    public Header(final NApplication app, final AppWindow browser, User user) {
         super();
     
         setWidth("100%");

@@ -68,4 +68,81 @@
     nbproject/build-impl.xml file. 
 
     -->
+
+
+    <target name="widgetset-init-map">
+        <!-- Name of the widget set -->
+        <property name="widgetset" value="org.vaadin.hezamu.googlemapwidget.GoogleMap"/>
+
+        <!-- Path to the widgetset directory. Required only for -->
+    	<!-- generated widget sets. Must be relative to         -->
+    	<!-- $src.dir, that is, under the first entry in        -->
+    	<!-- classpath.                                         -->
+       	<property name="widgetset-path" value="org/vaadin/hezamu/googlemapwidget"/>
+
+        <!-- Target where to compile the widget set -->
+        <property name="client-side-destination" value="web/VAADIN/widgetsets" />
+
+        <!-- Define if the widget set be generated automatically -->
+        <!-- from all widget sets included in the class path.    -->
+        <property name="generate.widgetset" value="1"/>
+    </target>
+
+    <target name="widgetset-init-console">
+        <!-- Name of the widget set -->
+        <property name="widgetset" value="org.vaadin.console.Console"/>
+       	<property name="widgetset-path" value="org/vaadin/console"/>
+
+        <property name="client-side-destination" value="web/VAADIN/widgetsets" />
+        <property name="generate.widgetset" value="1"/>
+    </target>
+
+
+    <!-- Generates a combined widget set from all widget    -->
+    <!-- sets in the class path, including project sources. -->
+    <!-- Updates the configuration if it already exists.    -->
+    <target name="generate-widgetset" depends="widgetset-init-console, widgetset-init-map,  compile" if="generate.widgetset">
+        <echo>Updating ${widgetset}...</echo>
+        <echo>Remember to define the widgetset in web.xml as follows.</echo>
+        <echo>
+            &lt;init-param&gt;
+                &lt;param-name&gt;widgetset&lt;/param-name&gt;
+                &lt;param-value&gt;${widgetset}&lt;/param-value&gt;
+            &lt;/init-param&gt;
+        </echo>
+
+        <!-- Create the directory if it does not already exist. -->
+        <mkdir dir="${src.dir}/${widgetset-path}"/>
+
+        <java classname="com.vaadin.terminal.gwt.widgetsetutils.WidgetSetBuilder" failonerror="yes" fork="yes" maxmemory="256m">
+            <arg value="${widgetset}"/>
+            <jvmarg value="-Xss1024k"/>
+            <jvmarg value="-Djava.awt.headless=true"/>
+            <classpath>
+                <pathelement path="${src.dir}" />
+                <pathelement path="${javac.classpath}" />
+                <pathelement path="${build.web.dir}/WEB-INF/classes" />
+            </classpath>
+        </java>
+    </target>
+
+    <!-- Compiles the widget set using the GWT compiler. -->
+    <target name="compile-widgetset" depends="init, widgetset-init-console, widgetset-init-map, generate-widgetset">
+        <echo>Compiling ${widgetset} into ${client-side-destination} directory...</echo>
+        
+        <java classname="com.google.gwt.dev.Compiler" failonerror="yes" fork="yes" maxmemory="256m">
+            <arg value="-war" />
+            <arg value="${client-side-destination}" />
+            <arg value="${widgetset}" />
+            <jvmarg value="-Xss1024k"/>
+            <jvmarg value="-Djava.awt.headless=true"/>
+            <classpath>
+                <pathelement path="${src.dir}" />
+                <pathelement path="${javac.classpath}" />
+                <pathelement path="${build.web.dir}/WEB-INF/classes" />
+		
+            </classpath>
+        </java>
+    </target>
+
 </project>

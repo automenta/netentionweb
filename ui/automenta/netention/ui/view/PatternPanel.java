@@ -5,7 +5,7 @@
 package automenta.netention.ui.view;
 
 import automenta.netention.Pattern;
-import automenta.netention.ui.browser.BrowserWindow;
+import automenta.netention.ui.browser.AppWindow;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.StringLengthValidator;
@@ -78,7 +78,7 @@ public class PatternPanel extends VerticalLayout {
         }
     }
 
-    public PatternPanel(final BrowserWindow browser, Pattern p) {
+    public PatternPanel(final AppWindow browser, Pattern p) {
         super();
         this.pattern = p;
 

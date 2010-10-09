@@ -5,6 +5,7 @@
 package automenta.netention.ui.browser;
 
 import automenta.netention.ui.NApplication;
+import automenta.netention.ui.game.GameWindow;
 
 /**
  * demo netention application
@@ -17,7 +18,10 @@ public class BrowserApp extends NApplication {
 
         setTheme("netention-gray");
 
-        setMainWindow(new BrowserWindow(this));
+        AppWindow bw = new GameWindow(this);
+        setMainWindow(bw);
+
+        //bw.newDetail();
     }
 
 }

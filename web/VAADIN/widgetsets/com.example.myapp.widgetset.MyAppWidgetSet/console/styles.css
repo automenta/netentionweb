@@ -1,0 +1,57 @@
+.term {
+	background-color: #000;
+	color: #f0f0f0;
+	/* color: #33d011; */
+	padding: 1px;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-family: monospace;;
+	font-size: 10pt;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.term-rev, .term input.term-rev  {
+	background-color: #f0f0f0;
+	color: #000;
+}
+
+.term .b {
+	margin: 0;
+	padding: 0;	
+}
+
+.term .p {
+	border: none;
+	margin: 0;
+	padding: 0;	
+}
+
+.term td {
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.term .ps {
+	margin: 0;
+	padding: 0;	
+}
+
+.term .psw {
+	width: auto;
+}
+
+.term .i {
+	border: none;
+	outline: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;	
+	font: inherit;
+	word-wrap:break-word;
+	background-color: #000;
+	color: #f0f0f0;
+	
+}

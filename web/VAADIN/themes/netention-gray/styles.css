@@ -34,14 +34,22 @@
 }
 
 .BigLabel {
-    font-size: 200%;
+    font-size: 160%;
 }
 .SmallLabel {
     font-size: 65%;
-    color: #333;
+    color: #111;
 }
 
 .WideDetailIcon {
     margin-bottom: 1em;
     background-color: #DDD;
+}
+
+.pushButtonPushed   {  background-color: #777;  color: white;  }
+.pushButtonUnpushed {  background-color: #bbb;  color: black; }
+
+.detailEditPanelPattern {
+    margin: 10px;
+    background-color: #eee;
 }

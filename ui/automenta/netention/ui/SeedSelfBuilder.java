@@ -111,6 +111,17 @@ public class SeedSelfBuilder {
                     new StringProp("location", "Location"));
         }
 
+        schema.addPattern(new Pattern("Todo").setIconURL("tango32/mimetypes/x-office-calendar.png"));
+        {
+            schema.addProperties("Todo",
+                    new StringProp("owner", "Start Time"),
+                    new StringProp("priority", "End Time"),
+                    new StringProp("involves", "Location"),
+                    new StringProp("blocks", "Blocks")
+                    //new StringProp("blockedBy", "Blocked By")                    
+                    ); //ObjectProp...
+        }
+
         schema.addPattern(new Pattern("Ingestion").setIconURL("tango32/mimetypes/x-office-calendar.png"));
         {
             schema.addProperties("Ingestion",
@@ -135,7 +146,7 @@ public class SeedSelfBuilder {
 
         schema.addPattern(new Pattern("Message").setIconURL("tango32/apps/internet-mail.png"));
         {
-            schema.addProperty(new StringProp("recipient", "Recipient"), "Message");
+            schema.addProperty(new StringProp("recipient", "Recipient", 1, -1), "Message");
             schema.addProperty(new StringProp("content", "Content"), "Message");
             //TODO use a TimePoint for whenSent
             schema.addProperty(new StringProp("whenSent", "When Sent"), "Message");

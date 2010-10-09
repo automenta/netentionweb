@@ -13,6 +13,17 @@
             <param-name>application</param-name>
             <param-value>automenta.netention.ui.browser.BrowserApp</param-value>           
         </init-param>
+
+        <init-param>
+            <param-name>widgetset</param-name>
+            <param-value>org.vaadin.console.Console</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>widgetset</param-name>
+            <param-value>org.vaadin.hezamu.googlemapwidget.GoogleMap</param-value>
+        </init-param>
+
     </servlet>
 
         <context-param>
@@ -49,7 +60,7 @@
     <welcome-file-list>
         <welcome-file/>
     </welcome-file-list>
-    
+
      
 
 </web-app>

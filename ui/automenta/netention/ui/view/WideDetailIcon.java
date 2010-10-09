@@ -2,6 +2,7 @@ package automenta.netention.ui.view;
 
 import automenta.netention.Detail;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -23,15 +24,27 @@ public class WideDetailIcon extends VerticalLayout {
 
 
     }
-
+    
     public WideDetailIcon(Detail d) {
+        this(d, null);
+    }
+
+    public WideDetailIcon(Detail d, ClickListener nameClicked) {
         super();
 
         addStyleName("WideDetailIcon");
-        
-        Label nameLabel = new BigLabel(d.getName());
-        //nameLabel.setCaption(n.getID());
-        addComponent(nameLabel);
+
+        if (nameClicked==null) {
+            Label nameLabel = new BigLabel(d.getName());
+            addComponent(nameLabel);
+        }
+         else {
+
+            Button nameButton = new Button(d.getName());
+            nameButton.addStyleName(Button.STYLE_LINK);
+            nameButton.addListener(nameClicked);
+            addComponent(nameButton);
+         }
     
         if (d.getPatterns()!=null)
             if (d.getPatterns().size() > 0)

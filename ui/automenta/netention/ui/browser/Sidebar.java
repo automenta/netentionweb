@@ -40,7 +40,7 @@ public class Sidebar extends VerticalLayout implements ValueChangeListener {
     VerticalLayout view = new VerticalLayout();
 
     
-    public Sidebar(final BrowserWindow browser) {
+    public Sidebar(final AppWindow browser) {
         super();
         
         HorizontalLayout topPanel = new HorizontalLayout();
@@ -64,6 +64,7 @@ public class Sidebar extends VerticalLayout implements ValueChangeListener {
             list = new BeanItemContainer<SidebarView>(SidebarView.class);
 
             qSelect = new NativeSelect("", list);
+            qSelect.setNullSelectionAllowed(false);
             qSelect.addStyleName("v-button");
             qSelect.setImmediate(true);
             topPanel.addComponent(qSelect);
