@@ -33,7 +33,7 @@ public class Header extends HorizontalLayout {
         this.user = user;
         this.browser = browser;
         
-        String userString = (user == null) ? "Anonymous" : user.getName();
+        String userString = (user == null) ? "Unidentified Agent" : user.getName();
 
         final Label nameLabel = new Label(userString);
         nameLabel.addStyleName("headerRealName");

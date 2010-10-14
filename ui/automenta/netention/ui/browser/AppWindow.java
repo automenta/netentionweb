@@ -213,7 +213,7 @@ abstract public class AppWindow extends Window implements ObjectViewer {
         public Component newComponent() {
             VerticalLayout newTab = new VerticalLayout();
 
-            Label x = new Label(app.getClassContent("content/about.html"));
+            Label x = new Label(app.getClassContent(path));
             x.addStyleName("htmlContent");
             x.setContentMode(Label.CONTENT_RAW);
             newTab.addComponent(x);
